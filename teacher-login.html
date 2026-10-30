@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Login</title>
+  <link rel="stylesheet" href="teacher-style.css">
+</head>
+<body>
+  <main class="auth-card">
+    <h1>Teacher Login</h1>
+    <p>Sign in to manage your courses</p>
+
+    <form id="loginForm">
+      <label for="email">Email address</label>
+      <input id="email" type="email" required
+             autocomplete="username" placeholder="you@example.com">
+
+      <label for="password">Password</label>
+      <input id="password" type="password" required
+             autocomplete="current-password" placeholder="Enter password">
+
+      <button type="submit">Login as Teacher</button>
+      <p id="message" role="status"></p>
+    </form>
+
+    <p>New teacher?
+      <a href="teacher-register.html">Create an account</a>
+    </p>
+  </main>
+
+  <script type="module" src="teacher-auth.js"></script>
+</body>
+</html>

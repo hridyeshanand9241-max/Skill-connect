@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SkillConnect | Login</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-container">
+
+        <div class="brand">
+            <h1>SkillConnect</h1>
+            <p>Learn Together. Grow Together.</p>
+        </div>
+
+        <div id="loginPanel" class="auth-form">
+
+            <h2>Welcome Back!</h2>
+            <p class="subtitle">Log in to continue learning.</p>
+
+            <form id="loginForm">
+
+                <label for="loginEmail">Email Address</label>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="loginPassword">Password</label>
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    required
+                >
+                <br><br>
+                <button type="submit">Login</button>
+
+            </form>
+
+            <p id="loginMessage" class="message"></p>
+
+            <p class="switch-text">
+                Don't have an account?
+                <a href="register.html">Create Account</a>
+            </p>
+
+        </div>
+
+        <div id="registerForm" class="auth-form hidden">
+
+            <h2>Create Your Account</h2>
+            <p class="subtitle">Join the student learning community.</p>
+
+            <form id="register">
+
+                <label for="registerName">Full Name</label>
+                <input
+                    type="text"
+                    id="registerName"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <label for="registerEmail">Email Address</label>
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="registerPassword">Password</label>
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Create a password"
+                    minlength="6"
+                    required
+                >
+
+                <button type="submit">Create Account</button>
+
+            </form>
+
+            <p id="registerMessage" class="message"></p>
+
+            <p class="switch-text">
+                Already have an account?
+                <a href="#" id="showLogin">Login</a>
+            </p>
+
+        </div>
+
+<div class="teacher-access">
+    <h3>Are you a teacher?</h3>
+    <p>Join our platform and share your knowledge.</p>
+
+    <a href="teacher-login.html">
+        Teacher Login
+    </a>
+
+    <a href="teacher-register.html">
+        Register as a Teacher
+    </a>
+</div>
+
+</div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

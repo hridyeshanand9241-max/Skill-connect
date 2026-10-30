@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Registration</title>
+  <link rel="stylesheet" href="teacher-style.css">
+</head>
+<body>
+  <main class="auth-card">
+    <h1>Teacher Registration</h1>
+    <p>Create your teaching account</p>
+
+    <form id="registerForm">
+      <label for="name">Full name</label>
+      <input id="name" type="text" required minlength="2"
+             autocomplete="name" placeholder="Enter your name">
+
+      <label for="email">Email address</label>
+      <input id="email" type="email" required
+             autocomplete="email" placeholder="you@example.com">
+
+      <label for="password">Password</label>
+      <input id="password" type="password" required minlength="8"
+             autocomplete="new-password" placeholder="At least 8 characters">
+
+      <label for="confirmPassword">Confirm password</label>
+      <input id="confirmPassword" type="password" required
+             autocomplete="new-password" placeholder="Repeat password">
+
+      <button type="submit">Register as Teacher</button>
+      <p id="message" role="status"></p>
+    </form>
+
+    <p>Already registered?
+      <a href="teacher-login.html">Teacher Login</a>
+    </p>
+  </main>
+
+  <script type="module" src="teacher-auth.js"></script>
+</body>
+</html>
+
+

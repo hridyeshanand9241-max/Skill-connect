@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Profile | SkillConnect</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+
+    <div class="auth-container profile-container">
+
+        <div class="brand">
+            <h1>SkillConnect</h1>
+            <p>Share knowledge. Build skills. Grow together.</p>
+        </div>
+
+        <div class="auth-form">
+            <h2>Tell Us About Yourself 🎓</h2>
+            <p class="subtitle">
+                Help us find the right learning partners for you.
+            </p>
+
+            <form id="studyProfileForm">
+
+                <label for="education">What are you studying?</label>
+                <select id="education" required>
+                    <option value="">Select your education level</option>
+                    <option>School Student</option>
+                    <option>Diploma</option>
+                    <option>Undergraduate</option>
+                    <option>Postgraduate</option>
+                    <option>Other</option>
+                </select>
+
+                <label for="classCourse">Class, course or year</label>
+                <input
+                    type="text"
+                    id="classCourse"
+                    placeholder="e.g. Class 12, BTech CSE, 2nd year"
+                    required
+                >
+
+                <label for="institution">School or college (optional)</label>
+                <input
+                    type="text"
+                    id="institution"
+                    placeholder="Enter your institution"
+                >
+
+                <label for="teachSkills">Which skills can you teach?</label>
+                <textarea
+                    id="teachSkills"
+                    placeholder="e.g. Python, HTML, Mathematics"
+                    rows="3"
+                    required
+                ></textarea>
+
+                <label for="learnSkills">Which skills do you want to learn?</label>
+                <textarea
+                    id="learnSkills"
+                    placeholder="e.g. Java, Web Development, Physics"
+                    rows="3"
+                    required
+                ></textarea>
+
+                <label for="level">Your skill level</label>
+                <select id="level" required>
+                    <option value="">Select your level</option>
+                    <option>Beginner</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+                </select>
+
+                <label for="availability">When are you available?</label>
+                <select id="availability" required>
+                    <option value="">Select availability</option>
+                    <option>Weekday mornings</option>
+                    <option>Weekday evenings</option>
+                    <option>Weekends</option>
+                    <option>Flexible</option>
+                </select>
+
+                <button type="submit">Save Profile & Continue</button>
+
+                <p id="profileMessage" class="message"></p>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="study-profile.js"></script>
+</body>
+</html>

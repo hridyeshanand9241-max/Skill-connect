@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillConnect | Course Marketplace</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1e293b;
+        }
+
+        header {
+            background: white;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px #0000000d;
+        }
+
+        .logo {
+            color: #2563eb;
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .hero {
+            margin: 30px 5%;
+            padding: 45px;
+            border-radius: 18px;
+            color: white;
+            background: linear-gradient(120deg, #1d4ed8, #7c3aed);
+        }
+
+        .hero h1 {
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        main {
+            padding: 10px 5% 50px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0 20px;
+        }
+
+        .section-heading h2 {
+            font-size: 25px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .category {
+            padding: 10px 17px;
+            border: 1px solid #dbeafe;
+            background: white;
+            color: #1d4ed8;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .category.active,
+        .category:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px #0000000b;
+            transition: transform 0.2s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-banner {
+            height: 145px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 57px;
+        }
+
+        .blue { background: #dbeafe; }
+        .purple { background: #ede9fe; }
+        .green { background: #dcfce7; }
+        .orange { background: #ffedd5; }
+        .pink { background: #fce7f3; }
+        .yellow { background: #fef9c3; }
+
+        .course-info {
+            padding: 20px;
+        }
+
+        .course-category {
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .course-info h3 {
+            margin: 10px 0;
+            font-size: 20px;
+        }
+
+        .description {
+            color: #64748b;
+            line-height: 1.5;
+            min-height: 45px;
+            font-size: 14px;
+        }
+
+        .rating {
+            margin: 15px 0;
+            color: #b45309;
+        }
+
+        .course-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .buy-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 11px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .buy-button:hover {
+            background: #1d4ed8;
+        }
+
+        .buy-button.enrolled {
+            background: #15803d;
+        }
+
+        .empty-message {
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 25px;
+            }
+
+            .hero h1 {
+                font-size: 27px;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">SkillConnect</div>
+
+    <nav>
+        <a href="#courses">Explore Courses</a>
+        <a href="#myCourses">My Courses (<span id="courseCount">0</span>)</a>
+        <span id="userName">Student</span>
+        <button class="logout" id="logoutButton">Logout</button>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1 id="heroTitle">Learn Skills. Build Your Future.</h1>
+
+    <p>
+        Discover new skills, learn from peers, and take the next step
+        in your learning journey.
+    </p>
+
+    <input
+        type="search"
+        id="searchInput"
+        class="search-box"
+        placeholder="Search Python, AI, Web Development..."
+    >
+</section>
+
+<main>
+
+    <section id="courses">
+        <div class="section-heading">
+            <h2>Explore Popular Courses</h2>
+            <span>Choose a skill to get started</span>
+        </div>
+
+        <div class="categories">
+            <button class="category active" data-category="All">All Courses</button>
+            <button class="category" data-category="Programming">Programming</button>
+            <button class="category" data-category="AI & Technology">AI & Technology</button>
+            <button class="category" data-category="Design">Design</button>
+            <button class="category" data-category="Career Skills">Career Skills</button>
+        </div>
+
+        <div class="course-grid" id="courseGrid"></div>
+
+        <p id="noResults" class="empty-message" hidden>
+            No courses found. Try another search.
+        </p>
+    </section>
+
+    <section id="myCourses">
+        <div class="section-heading">
+            <h2>My Courses</h2>
+            <span>Courses you have enrolled in</span>
+        </div>
+
+        <div class="course-grid" id="myCourseGrid"></div>
+
+        <p id="emptyCourses" class="empty-message">
+            You have not enrolled in any courses yet. Explore the courses above!
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 SkillConnect | Learn, Share and Grow Together</p>
+</footer>
+
+<script>
+    const user = JSON.parse(
+        sessionStorage.getItem("skillConnectCurrentUser") || "null"
+    );
+
+    if (!user) {
+        window.location.href = "index.html";
+    } else {
+        document.getElementById("userName").textContent =
+            "Hi, " + user.name;
+    }
+
+    const courses = [
+        {
+            id: 1,
+            title: "Python Programming",
+            category: "Programming",
+            description: "Learn Python fundamentals, loops, functions and OOP.",
+            price: 499,
+            rating: 4.8,
+            icon: "🐍",
+            color: "blue"
+        },
+        {
+            id: 2,
+            title: "Web Development",
+            category: "Programming",
+            description: "Build websites using HTML, CSS and JavaScript.",
+            price: 699,
+            rating: 4.7,
+            icon: "💻",
+            color: "purple"
+        },
+        {
+            id: 3,
+            title: "Artificial Intelligence",
+            category: "AI & Technology",
+            description: "Explore AI concepts and how intelligent systems work.",
+            price: 899,
+            rating: 4.9,
+            icon: "🤖",
+            color: "green"
+        },
+        {
+            id: 4,
+            title: "Machine Learning Basics",
+            category: "AI & Technology",
+            description: "Understand datasets, models and basic ML algorithms.",
+            price: 799,
+            rating: 4.8,
+            icon: "🧠",
+            color: "pink"
+        },
+        {
+            id: 5,
+            title: "UI/UX Design",
+            category: "Design",
+            description: "Learn design principles and create user-friendly interfaces.",
+            price: 599,
+            rating: 4.6,
+            icon: "🎨",
+            color: "orange"
+        },
+        {
+            id: 6,
+            title: "Data Structures",
+            category: "Programming",
+            description: "Learn arrays, stacks, queues, trees and algorithms.",
+            price: 599,
+            rating: 4.8,
+            icon: "📊",
+            color: "yellow"
+        },
+        {
+            id: 7,
+            title: "Communication Skills",
+            category: "Career Skills",
+            description: "Improve speaking, presentations and teamwork.",
+            price: 299,
+            rating: 4.5,
+            icon: "🗣️",
+            color: "green"
+        },
+        {
+            id: 8,
+            title: "Interview Preparation",
+            category: "Career Skills",
+            description: "Practise interview questions and build confidence.",
+            price: 399,
+            rating: 4.7,
+            icon: "🎯",
+            color: "purple"
+        }
+    ];
+
+    let selectedCategory = "All";
+
+    function getEnrolledCourses() {
+        const allEnrollments = JSON.parse(
+            localStorage.getItem("skillConnectEnrollments") || "{}"
+        );
+
+        return allEnrollments[user.email] || [];
+    }
+
+    function saveEnrolledCourses(enrolled) {
+        const allEnrollments = JSON.parse(
+            localStorage.getItem("skillConnectEnrollments") || "{}"
+        );
+
+        allEnrollments[user.email] = enrolled;
+
+        localStorage.setItem(
+            "skillConnectEnrollments",
+            JSON.stringify(allEnrollments)
+        );
+    }
+
+    function renderCourses() {
+        const grid = document.getElementById("courseGrid");
+        const search = document.getElementById("searchInput")
+            .value.trim().toLowerCase();
+
+        const enrolled = getEnrolledCourses();
+
+        const filtered = courses.filter(function(course) {
+            const matchesCategory =
+                selectedCategory === "All" ||
+                course.category === selectedCategory;
+
+            const matchesSearch =
+                course.title.toLowerCase().includes(search) ||
+                course.category.toLowerCase().includes(search) ||
+                course.description.toLowerCase().includes(search);
+
+            return matchesCategory && matchesSearch;
+        });
+
+        grid.innerHTML = "";
+
+        filtered.forEach(function(course) {
+            const isEnrolled = enrolled.includes(course.id);
+
+            grid.innerHTML += `
+                <article class="course-card">
+                    <div class="course-banner ${course.color}">
+                        ${course.icon}
+                    </div>
+
+                    <div class="course-info">
+                        <span class="course-category">
+                            ${course.category}
+                        </span>
+
+                        <h3>${course.title}</h3>
+
+                        <p class="description">
+                            ${course.description}
+                        </p>
+
+                        <p class="rating">⭐ ${course.rating} / 5.0</p>
+
+                        <div class="course-bottom">
+                            <span class="price">₹${course.price}</span>
+
+                            <button
+                                class="buy-button ${isEnrolled ? "enrolled" : ""}"
+                                onclick="enrollCourse(${course.id})">
+                                ${isEnrolled ? "Enrolled ✓" : "Buy Course"}
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            `;
+        });
+
+        document.getElementById("noResults").hidden = filtered.length !== 0;
+
+        renderMyCourses();
+    }
+
+    function renderMyCourses() {
+        const grid = document.getElementById("myCourseGrid");
+        const enrolled = getEnrolledCourses();
+
+        const myCourses = courses.filter(function(course) {
+            return enrolled.includes(course.id);
+        });
+
+        document.getElementById("courseCount").textContent =
+            myCourses.length;
+
+        document.getElementById("emptyCourses").hidden =
+            myCourses.length !== 0;
+
+        grid.innerHTML = "";
+
+        myCourses.forEach(function(course) {
+            grid.innerHTML += `
+                <article class="course-card">
+                    <div class="course-banner ${course.color}">
+                        ${course.icon}
+                    </div>
+
+                    <div class="course-info">
+                        <span class="course-category">
+                            ${course.category}
+                        </span>
+
+                        <h3>${course.title}</h3>
+
+                        <p class="description">
+                            ${course.description}
+                        </p>
+
+                        <p class="rating">⭐ ${course.rating} / 5.0</p>
+
+                        <p><strong>Enrollment status:</strong> Enrolled</p>
+                    </div>
+                </article>
+            `;
+        });
+    }
+
+    function enrollCourse(courseId) {
+        const course = courses.find(function(item) {
+            return item.id === courseId;
+        });
+
+        const enrolled = getEnrolledCourses();
+
+        if (enrolled.includes(courseId)) {
+            alert("You are already enrolled in " + course.title + "!");
+            return;
+        }
+
+        const confirmed = confirm(
+            "Demo enrollment for " + course.title +
+            " (₹" + course.price + ").\n\n" +
+            "This prototype does not process real payments. Continue?"
+        );
+
+        if (confirmed) {
+            enrolled.push(courseId);
+            saveEnrolledCourses(enrolled);
+
+            alert("You are now enrolled in " + course.title + "!");
+
+            renderCourses();
+        }
+    }
+
+    document.getElementById("searchInput").addEventListener(
+        "input",
+        renderCourses
+    );
+
+    document.querySelectorAll(".category").forEach(function(button) {
+        button.addEventListener("click", function() {
+            selectedCategory = button.dataset.category;
+
+            document.querySelectorAll(".category").forEach(function(item) {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            renderCourses();
+        });
+    });
+
+    document.getElementById("logoutButton").addEventListener(
+        "click",
+        function() {
+            sessionStorage.removeItem("skillConnectCurrentUser");
+            window.location.href = "index.html";
+        }
+    );
+
+    if (user) {
+        renderCourses();
+    }
+</script>
+<script>
+    const savedUser = sessionStorage.getItem(
+        "skillConnectCurrentUser"
+    );
+
+    if (!savedUser) {
+        window.location.replace("index.html");
+    } else {
+        const user = JSON.parse(savedUser);
+
+        if (user.role !== "student") {
+            window.location.replace("index.html");
+        } else {
+            const welcome = document.getElementById("welcomeMessage");
+
+            if (welcome) {
+                welcome.textContent = "Welcome, " + user.name + "!";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard | SkillConnect</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #172033;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+header h2 {
+    margin: 0;
+}
+
+header button {
+    background: #ef4444;
+    color: white;
+    border: 0;
+    padding: 10px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 1150px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.welcome {
+    margin-bottom: 25px;
+}
+
+.welcome p {
+    color: #64748b;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.stat-card, .panel {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 3px 12px #00000008;
+}
+
+.stat-card p {
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.stat-card h2 {
+    margin: 0;
+    color: #2563eb;
+}
+
+.panel {
+    margin-bottom: 25px;
+}
+
+.panel h2 {
+    margin-top: 0;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.primary-btn {
+    padding: 12px;
+    border: 0;
+    border-radius: 7px;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.course-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.course {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 18px;
+    overflow-wrap: anywhere;
+}
+
+.course h3 {
+    margin-top: 0;
+}
+
+.course p {
+    color: #64748b;
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 0;
+    border-radius: 6px;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+.empty {
+    color: #64748b;
+}
+
+@media (max-width: 800px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .course-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .course-list {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>SkillConnect Teacher</h2>
+    <button id="logoutBtn" type="button">Logout</button>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <h1>Welcome, <span id="teacherName">Teacher</span>!</h1>
+        <p>Manage your courses from one place.</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat-card">
+            <p>My Courses</p>
+            <h2 id="courseCount">0</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Students</p>
+            <h2>—</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Ratings</p>
+            <h2>—</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Earnings</p>
+            <h2>—</h2>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Create a New Course</h2>
+
+        <form id="courseForm">
+            <input id="courseTitle"
+                   type="text"
+                   placeholder="Course title"
+                   minlength="3"
+                   maxlength="100"
+                   required>
+
+            <select id="courseCategory" required>
+                <option value="">Select category</option>
+                <option value="Programming">Programming</option>
+                <option value="Web Development">Web Development</option>
+                <option value="AI and ML">AI and ML</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <select id="courseLevel" required>
+                <option value="">Select difficulty</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+            </select>
+
+            <input id="coursePrice"
+                   type="number"
+                   min="0"
+                   max="100000"
+                   step="1"
+                   placeholder="Course price in ₹"
+                   required>
+
+            <textarea id="courseDescription"
+                      placeholder="Course description"
+                      minlength="10"
+                      maxlength="1000"
+                      required></textarea>
+
+            <button class="primary-btn" type="submit">
+                Add Course
+            </button>
+            <p id="message" role="status"></p>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>My Courses</h2>
+        <div id="courseList" class="course-list"></div>
+    </section>
+
+</main>
+
+<script>
+const sessionKey = "skillConnectCurrentUser";
+const accountsKey = "skillConnectAccounts";
+
+function readSession() {
+    try {
+        return JSON.parse(sessionStorage.getItem(sessionKey));
+    } catch {
+        return null;
+    }
+}
+
+const currentUser = readSession();
+
+// This checks the existing session only.
+// A production site must verify authorization on the server.
+if (!currentUser) {
+    window.location.replace("index.html");
+} else {
+    document.getElementById("teacherName").textContent =
+        currentUser.name || currentUser.fullName || "Teacher";
+}
+
+const courseForm = document.getElementById("courseForm");
+const courseList = document.getElementById("courseList");
+const message = document.getElementById("message");
+
+function getCourses() {
+    try {
+        const all = JSON.parse(
+            localStorage.getItem("skillConnectTeacherCourses") || "[]"
+        );
+
+        if (!Array.isArray(all)) return [];
+
+        return all.filter(course =>
+            course &&
+            course.owner === currentUser?.email
+        );
+    } catch {
+        return [];
+    }
+}
+
+function renderCourses() {
+    const courses = getCourses();
+
+    document.getElementById("courseCount").textContent =
+        courses.length;
+
+    courseList.replaceChildren();
+
+    if (courses.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent = "You have not created any courses yet.";
+        courseList.appendChild(empty);
+        return;
+    }
+
+    courses.forEach(course => {
+        const card = document.createElement("article");
+        card.className = "course";
+
+        const title = document.createElement("h3");
+        title.textContent = course.title;
+
+        const category = document.createElement("p");
+        category.textContent = course.category + " • " + course.level;
+
+        const price = document.createElement("p");
+        price.textContent = "Price: ₹" + course.price;
+
+        const description = document.createElement("p");
+        description.textContent = course.description;
+
+        const remove = document.createElement("button");
+        remove.className = "delete-btn";
+        remove.type = "button";
+        remove.textContent = "Delete Course";
+
+        remove.addEventListener("click", () => {
+            if (!confirm("Delete this course?")) return;
+
+            const remaining = JSON.parse(
+                localStorage.getItem("skillConnectTeacherCourses") || "[]"
+            ).filter(item => item.id !== course.id);
+
+            localStorage.setItem(
+                "skillConnectTeacherCourses",
+                JSON.stringify(remaining)
+            );
+
+            renderCourses();
+        });
+
+        card.append(title, category, price, description, remove);
+        courseList.appendChild(card);
+    });
+}
+
+courseForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (!currentUser || !currentUser.email) {
+        message.textContent = "Please log in again.";
+        return;
+    }
+
+    const title = document.getElementById("courseTitle").value.trim();
+    const category = document.getElementById("courseCategory").value;
+    const level = document.getElementById("courseLevel").value;
+    const price = Number(document.getElementById("coursePrice").value);
+    const description =
+        document.getElementById("courseDescription").value.trim();
+
+    if (title.length < 3 || description.length < 10 ||
+        !category || !level || !Number.isFinite(price) ||
+        price < 0 || price > 100000) {
+        message.textContent = "Please enter valid course details.";
+        return;
+    }
+
+    const courses = JSON.parse(
+        localStorage.getItem("skillConnectTeacherCourses") || "[]"
+    );
+
+    courses.push({
+        id: crypto.randomUUID(),
+        owner: currentUser.email,
+        title,
+        category,
+        level,
+        price,
+        description
+    });
+
+    localStorage.setItem(
+        "skillConnectTeacherCourses",
+        JSON.stringify(courses)
+    );
+
+    courseForm.reset();
+    message.textContent = "Course added successfully.";
+    renderCourses();
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    sessionStorage.removeItem(sessionKey);
+    window.location.replace("index.html");
+});
+
+renderCourses();
+</script>
+<script src="teacher.js"></script>
+</body>
+</html>
